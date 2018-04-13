@@ -1,5 +1,5 @@
-# Hansen's Notebook on Python Learning
-— This is a place that I use as a record for my python learning trip :) and I will list the resources that I used for Python and Machine Learning here.
+# Hansen's Notebook on Self-Paced CS Learning
+— This is a place that I use as a record for my cs learning trip :) and I will list the resources that I used for Python and Machine Learning here.
 
 
 
