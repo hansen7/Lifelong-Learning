@@ -1,0 +1,1 @@
+The material I used here is basically the Oreilly Textbook(syntax in python 2) and the [online resources](http://www.nltk.org/book/)(syntax in python3).
