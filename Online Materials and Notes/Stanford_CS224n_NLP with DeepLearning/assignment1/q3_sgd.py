@@ -35,7 +35,7 @@ def load_saved_params():
 '''
 
 def save_params(iter, params):
-    with open("saved_params_%d.npy" % iter, "w") as f:
+    with open("saved_params_%d.npy" % iter, "wb") as f:
         pickle.dump(params, f)
         pickle.dump(random.getstate(), f)
 
