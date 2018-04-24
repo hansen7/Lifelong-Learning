@@ -5,7 +5,6 @@ import pickle
 import numpy as np
 import os
 import random
-import unicodedata
 
 class StanfordSentiment:
     def __init__(self, path=None, tablesize = 1000000):
@@ -52,15 +51,16 @@ class StanfordSentiment:
             return self._sentences
 
         sentences = []
-        # Some of the sentences have been double encoded as utf-8
-        # https://stackoverflow.com/questions/41101749/python-understanding-unicode-conversion
-        with open(self.path + "/datasetSentences.txt", "rb") as f:
-            f.readline()  # Skip header
+        with open(self.path + "/datasetSentences.txt", "r") as f:
+            first = True
             for line in f:
+                if first:
+                    first = False
+                    continue
+
                 splitted = line.strip().split()[1:]
-                # Deal with some peculiar encoding issues with this file
-                sentences.append([w.lower().decode('utf-8').encode('latin1').decode('utf-8')
-                                  for w in splitted])
+                # no deal--(Deal with some peculiar encoding issues with this file)
+                sentences += [[w.lower() for w in splitted]]
 
         self._sentences = sentences
         self._sentlengths = np.array([len(s) for s in sentences])
@@ -142,7 +142,9 @@ class StanfordSentiment:
         for i in range(self.numSentences()):
             sentence = sentences[i]
             full_sent = " ".join(sentence).replace('-lrb-', '(').replace('-rrb-', ')')
-            sent_labels[i] = labels[dictionary[full_sent]]
+            #avoid key error(drop some sentence which are not in dictionary)
+            if full_sent in dictionary.keys():              
+                sent_labels[i] = labels[dictionary[full_sent]]
 
         self._sent_labels = sent_labels
         return self._sent_labels
