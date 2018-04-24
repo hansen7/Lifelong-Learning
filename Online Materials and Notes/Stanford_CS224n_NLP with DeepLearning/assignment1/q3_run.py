@@ -34,7 +34,7 @@ wordVectors = np.concatenate(
 
 word2vec = lambda vec: word2vec_sgd_wrapper(skipgram, tokens, vec, dataset, C,
                                             negSamplingCostAndGradient)
-wordVectors = sgd(word2vec, x0=wordVectors, step=0.3, iterations=1000,\
+wordVectors = sgd(word2vec, x0=wordVectors, step=0.3, iterations=20000,\
                 postprocessing=None, useSaved=True, PRINT_EVERY=10)
 # Note that normalization is not called here. This is not a bug,
 # normalizing during training loses the notion of length.
