@@ -82,9 +82,12 @@ def softmaxCostAndGradient(predicted, target, outputVectors, dataset):
 
     #跟推导的结果一致，
     gradPred = np.dot(prob, outputVectors)
+    
+    #这里我不是很清楚为什么要这么来写,这三种表达方式等价，我用的是我比较熟悉的一种
+    #grad = prob[:, np.newaxis] * predicted[np.newaxis, :]
     #grad = np.outer(prob, predicted)
-    #grad = np.dot(prob.reshape(-1,1), predicted)
-    grad = prob[:, np.newaxis] * predicted[np.newaxis, :]
+    grad = np.dot(prob.reshape(-1,1), predicted.reshape(1, -1))
+    
     #raise NotImplementedError
     ### END YOUR CODE
 
@@ -122,13 +125,22 @@ def negSamplingCostAndGradient(predicted, target, outputVectors, dataset,
     indices = [target]
     indices.extend(getNegativeSamples(target, dataset, K))
 
+    '''so the first space in digit stores the target'''
+
     ### YOUR CODE HERE
     prob =  np.dot(outputVectors, predicted)
-    cost = -np.log(prob[target]) - np.log(sigmoid(-prob[indices[1:]])).sum()
+    cost = -np.log(sigmoid(prob[target])) \
+                    - np.log(sigmoid(-prob[indices[1:]])).sum()
+
+    # prob & cost can be derived by myself easily
 
     opp_sig = (1 - sigmoid( -prob[indices[1:]] ))
-    gradPred = (sigmoid(prob[target]) - 1) * outputVectors[target] +  sum(opp_sig[:, np.newaxis] * outputVectors[indices[1:]])
     
+    #partial loss function /partial Vc
+    gradPred = (sigmoid(prob[target]) - 1) * outputVectors[target] \
+          +  sum(opp_sig[:, np.newaxis] * outputVectors[indices[1:]])
+    
+
     grad = np.zeros_like(outputVectors)
     grad[target] = (sigmoid(prob[target]) - 1) * predicted
 
