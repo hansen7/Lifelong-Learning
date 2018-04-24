@@ -134,11 +134,11 @@ def negSamplingCostAndGradient(predicted, target, outputVectors, dataset,
 
     # prob & cost can be derived by myself easily
 
-    opp_sig = (1 - sigmoid( -prob[indices[1:]] ))
+    opp_sig = (sigmoid(-prob[indices[1:]]) - 1)
     
     #partial loss function /partial Vc
     gradPred = (sigmoid(prob[target]) - 1) * outputVectors[target] \
-          +  sum(opp_sig[:, np.newaxis] * outputVectors[indices[1:]])
+          +  sum(-opp_sig.reshape(-1,1) * outputVectors[indices[1:]])
     
 
     grad = np.zeros_like(outputVectors)
