@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 # Save parameters every a few SGD iterations as fail-safe
-SAVE_PARAMS_EVERY = 500
+SAVE_PARAMS_EVERY = 200
 
 import glob
 import random
@@ -29,13 +29,9 @@ def load_saved_params():
     else:
         return st, None, None
 
-'''
-这个地方是真滴恶心。。the mode 'w+b' opens and truncates the file to 0 bytes, while
-'r+b' opens the file without truncation，我之前写的是open(..'wb'),所以就他妈一直报错。。。
-'''
 
 def save_params(iter, params):
-    with open("saved_params_%d.npy" % iter, "w") as f:
+    with open("saved_params_%d.npy" % iter, "wb") as f:
         pickle.dump(params, f)
         pickle.dump(random.getstate(), f)
 
@@ -86,16 +82,14 @@ def sgd(f, x0, step, iterations, postprocessing=None, useSaved=False,
     for iter in range(start_iter + 1, iterations + 1):
         # Don't forget to apply the postprocessing after every iteration!
         # You might want to print the progress every few iterations.
-        
+
         ### YOUR CODE HERE
         cost, grad = f(x)
-        x -= step*grad
+        x -= grad * step
         x = postprocessing(x)
-
-        #raise NotImplementedError
         ### END YOUR CODE
 
-        if (iter % PRINT_EVERY == 0):
+        if iter % PRINT_EVERY == 0:
             if not expcost:
                 expcost = cost
             else:
@@ -105,29 +99,30 @@ def sgd(f, x0, step, iterations, postprocessing=None, useSaved=False,
         if iter % SAVE_PARAMS_EVERY == 0 and useSaved:
             save_params(iter, x)
 
-        if (iter % ANNEAL_EVERY == 0):
+        if iter % ANNEAL_EVERY == 0:
             step *= 0.5
 
     return x
 
 
 def sanity_check():
-    quad = lambda x: (np.sum(x ** 2), x * 2) # to calculate the quadratic form
+    quad = lambda x: (np.sum(x ** 2), 2 * x)
 
-    print ("Running sanity checks...")
-    t1 = sgd(quad, 0.5, 0.01, 1000, PRINT_EVERY=100)
-    print ("test 1 result:", t1)
+    print("Running sanity checks...")
+    t1 = sgd(f=quad, x0=0.5, step=0.01, iterations=1000, PRINT_EVERY=100)
+    print("test 1 result:", t1)
     assert abs(t1) <= 1e-6
 
     t2 = sgd(quad, 0.0, 0.01, 1000, PRINT_EVERY=100)
-    print ("test 2 result:", t2)
+    print("test 2 result:", t2)
     assert abs(t2) <= 1e-6
 
     t3 = sgd(quad, -1.5, 0.01, 1000, PRINT_EVERY=100)
-    print ("test 3 result:", t3)
+    print("test 3 result:", t3)
     assert abs(t3) <= 1e-6
 
-    print ("")
+    print()
+    ""
 
 
 def your_sanity_checks():
@@ -137,10 +132,10 @@ def your_sanity_checks():
     This function will not be called by the autograder, nor will
     your additional tests be graded.
     """
-    print ("Running your sanity checks...\n")
-    print ("Hansen is a lazy but confident person, so he doesn't have his own instances to test these modules:)\n")
+    print()
+    "Running your sanity checks..."
     ### YOUR CODE HERE
-    #raise NotImplementedError
+    # raise NotImplementedError
     ### END YOUR CODE
 
 

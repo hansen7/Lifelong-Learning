@@ -81,7 +81,7 @@ def softmaxCostAndGradient(predicted, target, outputVectors, dataset):
     prob[target] -= 1.
 
     #跟推导的结果一致，
-    gradPred = np.dot(prob, outputVectors)
+    gradPred = np.dot(outputVectors.T, prob)
     
     #这里我不是很清楚为什么要这么来写,这三种表达方式等价，我用的是我比较熟悉的一种
     #grad = prob[:, np.newaxis] * predicted[np.newaxis, :]
@@ -128,7 +128,7 @@ def negSamplingCostAndGradient(predicted, target, outputVectors, dataset,
     '''so the first space in digit stores the target'''
 
     ### YOUR CODE HERE
-    prob =  np.dot(outputVectors, predicted)
+    prob =  np.dot(predicted, outputVectors.T)
     cost = -np.log(sigmoid(prob[target])) \
                     - np.log(sigmoid(-prob[indices[1:]])).sum()
 
