@@ -138,9 +138,9 @@ def negSamplingCostAndGradient(predicted, target, outputVectors, dataset,
     gradPred = (sigmoid(prob[target]) - 1) * outputVectors[target] \
           +  sum(-(sigmoid(-prob[indices[1:]]) - 1).reshape(-1,1) * outputVectors[indices[1:]])
     
-    # grad is like partial lss funtion/ partical u
-    
-    grad = np.zeros_like(outputVectors)# to generate np.zeros with same shape as outputVectors
+    # grad is like partial lss funtion/ partical u   
+    #grad = np.zeros_like(outputVectors)# to generate np.zeros with same shape as outputVectors
+    grad = np.zeros(outputVectors.shape) #这是我更熟悉的写法
     grad[target] = (sigmoid(prob[target]) - 1) * predicted
 
     for k in indices[1:]:
@@ -181,15 +181,16 @@ def skipgram(currentWord, C, contextWords, tokens, inputVectors, outputVectors,
     gradOut = np.zeros(outputVectors.shape)
 
     ### YOUR CODE HERE
-    center_w = tokens[currentWord] # vector represntation of the center word
-    for context_w in contextWords:
+    center_word = tokens[currentWord] # vector representation of the center word
+    for context_word in contextWords:
         # index of target word
-        target = tokens[context_w]
+        target = tokens[context_word] # vector representation of the context word
 
-        cost_, gradPred_, gradOut_ = word2vecCostAndGradient(inputVectors[center_w], target, outputVectors, dataset)
-        cost += cost_
+        cost_, gradPred_, gradOut_ = word2vecCostAndGradient(inputVectors[center_word], target, outputVectors, dataset)
+        #sum all the values together
+        cost += cost_ 
         gradOut += gradOut_
-        gradIn[center_w] += gradPred_
+        gradIn[center_word] += gradPred_
     ### END YOUR CODE
 
     return cost, gradIn, gradOut
@@ -216,11 +217,11 @@ def cbow(currentWord, C, contextWords, tokens, inputVectors, outputVectors,
     target = tokens[currentWord]
 
     # context_w correspond to the \hat{v} vector
-    context_w = sum(inputVectors[tokens[w]] for w in contextWords)
+    context_word = sum(inputVectors[tokens[w]] for w in contextWords)
 
-    cost, gradPred, gradOut = word2vecCostAndGradient(context_w, target, outputVectors, dataset)
+    cost, gradPred, gradOut = word2vecCostAndGradient(context_word, target, outputVectors, dataset)
 
-    gradIn = np.zeros_like(inputVectors)
+    gradIn = np.zeros(inputVectors.shape)
     
     for w in contextWords:
         gradIn[tokens[w]] += gradPred
