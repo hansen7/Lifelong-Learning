@@ -1,1 +1,0 @@
-The material I used here is basically the [online resources](http://www.nltk.org/book/)(syntax in python3), it is the open source and updated version of the Oreilly published book, *Natural Language Processing with Python*.
