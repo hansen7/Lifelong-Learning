@@ -20,27 +20,29 @@ data, n_samples = utils.read_birth_life_data(DATA_FILE)
 
 # Step 2: create placeholders for X (birth rate) and Y (life expectancy)
 # Remember both X and Y are scalars with type float
-X, Y = None, None
+X = tf.placeholder(tf.float32, name='X')
+Y = tf.placeholder(tf.float32, name='Y')
 #############################
 ########## TO DO ############
 #############################
 
 # Step 3: create weight and bias, initialized to 0.0
 # Make sure to use tf.get_variable
-w, b = None, None
+w = tf.get_variable('weights', initializer = tf.constant(0.0))
+b = tf.get_variable('bias',    initializer = tf.constant(0.0))
 #############################
 ########## TO DO ############
 #############################
 
 # Step 4: build model to predict Y
 # e.g. how would you derive at Y_predicted given X, w, and b
-Y_predicted = None
+Y_predicted = w * X + b
 #############################
 ########## TO DO ############
 #############################
 
 # Step 5: use the square error as the loss function
-loss = None
+loss = tf.square(Y - Y_predicted, name='loss')
 #############################
 ########## TO DO ############
 #############################
@@ -49,7 +51,7 @@ loss = None
 optimizer = tf.train.GradientDescentOptimizer(learning_rate=0.001).minimize(loss)
 
 start = time.time()
-
+writer = tf.summary.FileWriter('./graphs/linear_stater', tf.get_default_graph())
 # Create a filewriter to write the model's graph to TensorBoard
 #############################
 ########## TO DO ############
@@ -57,6 +59,7 @@ start = time.time()
 
 with tf.Session() as sess:
     # Step 7: initialize the necessary variables, in this case, w and b
+    sess.run(tf.global_variables_initializer())
     #############################
     ########## TO DO ############
     #############################
@@ -67,17 +70,17 @@ with tf.Session() as sess:
         for x, y in data:
             # Execute train_op and get the value of loss.
             # Don't forget to feed in data for placeholders
-            _, loss = ########## TO DO ############
-            total_loss += loss
+            _, l = sess.run([optimizer, loss], feed_dict = {X:x, Y:y})
+            total_loss += l
         print('Epoch {0}: {1}'.format(i, total_loss/n_samples))
 
     # close the writer when you're done using it
     #############################
     ########## TO DO ############
     #############################
-    
+    writer.close()
     # Step 9: output the values of w and b
-    w_out, b_out = None, None
+    w_out, b_out = sess.run([w,b])
     #############################
     ########## TO DO ############
     #############################

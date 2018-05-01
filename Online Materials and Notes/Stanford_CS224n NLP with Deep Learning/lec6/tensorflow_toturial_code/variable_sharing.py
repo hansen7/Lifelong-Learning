@@ -12,6 +12,7 @@ import tensorflow as tf
 x1 = tf.truncated_normal([200, 100], name='x1')
 x2 = tf.truncated_normal([200, 100], name='x2')
 
+#This one use tf.Variable() to define the variables
 def two_hidden_layers(x):
     assert x.shape.as_list() == [200, 100]
     w1 = tf.Variable(tf.random_normal([100, 50]), name='h1_weights')
@@ -23,6 +24,7 @@ def two_hidden_layers(x):
     logits = tf.matmul(h1, w2) + b2
     return logits
 
+#This function uses tf.get_variable() to define the variables
 def two_hidden_layers_2(x):
     assert x.shape.as_list() == [200, 100]
     w1 = tf.get_variable('h1_weights', [100, 50], initializer=tf.random_normal_initializer())
@@ -50,7 +52,7 @@ def two_hidden_layers_2(x):
 #     scope.reuse_variables()
 #     logits2 = two_hidden_layers_2(x2)
 
-def fully_connected(x, output_dim, scope):
+def fully_connected(x, output_dim, scope): #传进去的这个scope类似于一个repo/direcotory name
     with tf.variable_scope(scope, reuse=tf.AUTO_REUSE) as scope:
         w = tf.get_variable('weights', [x.shape[1], output_dim], initializer=tf.random_normal_initializer())
         b = tf.get_variable('biases', [output_dim], initializer=tf.constant_initializer(0.0))

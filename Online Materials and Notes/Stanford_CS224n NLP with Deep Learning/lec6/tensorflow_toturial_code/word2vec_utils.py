@@ -12,7 +12,8 @@ import tensorflow as tf
 import utils
 
 def read_data(file_path):
-    """ Read data into a list of tokens 
+    """ 
+    Read data into a list of tokens 
     There should be 17,005,207 tokens
     """
     with zipfile.ZipFile(file_path) as f:
@@ -20,7 +21,7 @@ def read_data(file_path):
     return words
 
 def build_vocab(words, vocab_size, visual_fld):
-    """ Build vocabulary of VOCAB_SIZE most frequent words and write it to
+    """ Build vocabulary of VOCAB_SIZE most frequent used words and write it to
     visualization/vocab.tsv
     """
     utils.safe_mkdir(visual_fld)
@@ -44,6 +45,16 @@ def convert_words_to_index(words, dictionary):
     """ Replace each word in the dataset with its index in the dictionary """
     return [dictionary[word] if word in dictionary else 0 for word in words]
 
+
+
+'''
+Yield are used in Python generators. 
+A generator function is defined like a normal function, 
+but whenever it needs to generate a value, 
+it does so with the yield keyword rather than return. 
+If the body of a def contains yield, 
+the function automatically becomes a generator function.
+'''
 def generate_sample(index_words, context_window_size):
     """ Form training pairs according to the skip-gram model. """
     for index, center in enumerate(index_words):

@@ -37,6 +37,11 @@ def read_birth_life_data(filename):
     n_samples = len(data)
     data = np.asarray(data, dtype=np.float32)
     return data, n_samples
+'''
+array和asarray都可以将结构数据转化为ndarray，但是主要区别就是当数据源是ndarray时，
+array仍然会copy出一个副本，占用新的内存，但asarray不会，因此对原数据进行操作就会影响np.asarray()的影响
+'''
+
 
 def download_one_file(download_url, 
                     local_dest, 

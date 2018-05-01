@@ -1,0 +1,4 @@
+embeddings {
+  tensor_name: "embedding:0"
+  metadata_path: "visualization/vocab_2000.tsv"
+}

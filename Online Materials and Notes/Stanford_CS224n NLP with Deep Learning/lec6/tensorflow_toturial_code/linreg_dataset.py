@@ -1,4 +1,5 @@
-""" Solution for simple linear regression example using tf.data
+""" 
+Solution for simple linear regression example using tf.data
 Created by Chip Huyen (chiphuyen@cs.stanford.edu)
 CS20: "TensorFlow for Deep Learning Research"
 cs20.stanford.edu
@@ -24,7 +25,7 @@ dataset = tf.data.Dataset.from_tensor_slices((data[:,0], data[:,1]))
 iterator = dataset.make_initializable_iterator()
 X, Y = iterator.get_next()
 
-# Step 3: create weight and bias, initialized to 0
+# Step 3: create weight and bias, initialized to zeros
 w = tf.get_variable('weights', initializer=tf.constant(0.0))
 b = tf.get_variable('bias', initializer=tf.constant(0.0))
 

@@ -35,34 +35,53 @@ NUM_VISUALIZE = 2000        # number of tokens to visualize
 def word2vec(dataset):
     """ Build the graph for word2vec model and train it """
     # Step 1: create iterator and get input, output from the dataset
+    iterator = dataset.make_initializable_iterator()
+    center_words, target_words = iterator.get_next()
+
     #############################
     ########## TO DO ############
     #############################
 
     # Step 2: define weights. 
     # In word2vec, it's the weights that we care about
+    embed_matrix = tf.get_variable('embed_matrix',
+                                    shape = [VOCAB_SIZE, EMBED_SIZE],
+                                    initializer = tf.random_uniform_initializer())
+
     #############################
     ########## TO DO ############
     #############################
 
     # Step 3: define the inference (embedding lookup)
+    embed = tf.nn.embedding_lookup(embed_matrix, center_words, name='embed')
     #############################
     ########## TO DO ############
     #############################
 
     # Step 4: define loss function
     # construct variables for NCE loss
+    nce_weight = tf.get_variable('nce_weight',
+                                shape = [VOCAB_SIZE, EMBED_SIZE],
+                                initializer = tf.truncated_normal_initializer(stddev=1.0 / (EMBED_SIZE ** 0.5)))
+    nce_bias = tf.get_variable('nce_bias', initializer = tf.zeros([VOCAB_SIZE]))
     #############################
     ########## TO DO ############
     #############################
 
     # define loss function to be NCE loss function
+    loss = tf.reduce_mean(tf.nn.nce_loss(weights = nce_weight,
+                                        biases = nce_bias,
+                                        labels = target_words,
+                                        inputs = embed,
+                                        num_sampled = NUM_SAMPLED,
+                                        num_classes = VOCAB_SIZE), name = 'loss')
     #############################
     ########## TO DO ############
     #############################
 
     # Step 5: define optimizer that follows gradient descent update rule
     # to minimize loss
+    optimizer = tf.train.GradientDescentOptimizer(LEARNING_RATE).minimize(loss)
     #############################
     ########## TO DO ############
     #############################
@@ -71,6 +90,8 @@ def word2vec(dataset):
     with tf.Session() as sess:
 
         # Step 6: initialize iterator and variables
+        sess.run(iterator.initializer)
+        sess.run(tf.global_variables_initializer())
         #############################
         ########## TO DO ############
         #############################
@@ -81,11 +102,11 @@ def word2vec(dataset):
         for index in range(NUM_TRAIN_STEPS):
             try:
                 # Step 7: execute optimizer and fetch loss
+                loss_batch, _ = sess.run([loss, optimizer])
                 #############################
                 ########## TO DO ############
                 #############################
-                loss_batch = None
-
+                
                 total_loss += loss_batch
 
                 if (index + 1) % SKIP_STEP == 0:
