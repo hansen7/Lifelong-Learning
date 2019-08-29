@@ -1,5 +1,14 @@
+
+'''
+
+'''
+
+
 '''You can define functions inside functions'''
 def hi(name="hansen"):
+    # enter hi() -> enter great() -> leave great() 
+    # -> enter welcome() -> leave welcome() -> leave hi()
+    
     print("now you are inside the hi() function")
 
     def greet():
@@ -31,8 +40,8 @@ def hi_new(name="hansen"):
 from functools import wraps
 
 def decorator_name(f):
-    @wraps(f) # if not use wraps, then the function will change into decorated
-    def decorated(*args, **kwargs):
+    @wraps(f) # if not use wraps, then the function will change into decorator
+    def decorated(*args, **kwargs): # define can_run from outside ???
         if not can_run:
             return "Function will not run"
         return f(*args, **kwargs)
@@ -97,11 +106,11 @@ class email_logit(logit):
 
 
 if __name__ == '__main__':
-    #hi()
+    # hi()
     '''
     a = hi_new()
     print(a)
     print(a())'''
-    #can_run = False
-    #print(func())
+    can_run = True
+    print(func())
     print(addition_func(4))
