@@ -1,0 +1,139 @@
+### 16. 3Sum Closest
+
+**Description:**
+
+​	Given an array ``nums`` of n integers and an integer *target*, find three integers in ``nums`` such that the sum is closest to *target*. Return the sum of the three integers. You may assume that each input would have exactly one solution.
+
+**Note:**
+
+​	The solution set must not contain duplicate quadruplets.
+
+**Example:**
+
+```markdown
+Given array nums = [-1, 0, 1, 2, -1, -4],
+
+A solution set is:
+[
+  [-1, 0, 1],
+  [-1, -1, 2]
+]
+```
+
+
+
+**Submission:**
+
+- Python
+
+```python
+class Solution:
+
+    '''311 / 313 test cases passed, time limit exceed'''
+    def threeSum(self, nums, target):
+        """
+        :type nums: List[int]
+        :rtype: List[List[int]]
+        """
+        # actually k-sum is a class of questions
+        nums.sort()
+        result = []
+
+        for idx in range(len(nums)-2):
+            if nums[idx] > (target//3 + 1):
+                return result
+            if idx>0 and nums[idx] == nums[idx-1]:
+                continue
+            twosum_ = self.twoSum(nums[idx+1:], target-nums[idx])
+            if twosum_:
+                result += twosum_
+                #result.append([item for item in twosum_])
+        return result
+
+
+
+    def twoSum(self, nums, target):
+        # hash 2, a little bit better than twoSum2()
+        hash_nums = {}
+        result = []
+        for index, num in enumerate(nums):
+            residue = target - num
+            try:
+                #check whether residue has appeared in the previous list
+                hash_nums[residue]
+                if [-target, nums[hash_nums[residue]], nums[index]] not in result:
+                    result.append([-target, nums[hash_nums[residue]], nums[index]])
+            except KeyError:
+                hash_nums[num] = index
+        return result if len(result) else None
+
+
+    # actually the list we give the two_sum is in order, so we can use the Q167 solution
+    # your runtime beats 92.22% of all the submissions!!
+    def twoSum_linear(self, nums, target):
+        head, tail = 0, len(nums) - 1
+        result = []
+        while head < tail:
+            sum = nums[head] + nums[tail]
+            if sum == target:
+                if [-target, nums[head], nums[tail]] not in result:
+                    result.append([-target, nums[head], nums[tail]])
+                head += 1
+            elif sum < target:
+                head += 1
+            else:
+                tail -= 1
+        return result if len(result) else None
+
+	def threeSum_finalv(self, nums, target=0):
+        """
+        :type nums: List[int]
+        :rtype: List[List[int]]
+        """
+        # actually k-sum is a class of questions
+        nums.sort()
+        result = []
+
+        for idx in range(len(nums)-2):
+            # early stop
+            if nums[idx] > 0:
+                return result
+            # pass repeated numbers
+            if idx>0 and nums[idx] == nums[idx-1]:
+                continue
+            # use two sum to search all the possible results
+            twosum_ = self.twoSum_linear(nums[idx+1:], target-nums[idx])
+            if twosum_:
+                result += twosum_
+        return result
+	
+
+'''Test Code'''
+
+nums = [-1, -1, -2, 2, 2, 3, 4, 5]
+target = 0
+
+solution = Solution()
+print(solution.twoSum_linear([1,2,2,2,3,4], 5))
+#print(solution.twoSum([0,0], target))
+```
+
+
+
+- C++
+
+```c++
+
+```
+
+
+
+- Java
+
+```java
+
+```
+
+
+
+​	

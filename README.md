@@ -1,5 +1,5 @@
-# Hansen's Notebook on Self-Paced CS Learning
-— This is a place that I use as a record for my cs learning trip :) and I will list the resources that I used for Python and Machine Learning here.
+# Notes on Learning Materials
+“The only true wisdom is in knowing you know nothing.” – Socrates
 
 
 
@@ -24,11 +24,5 @@
 
 
 
-
-
 ### Blogs
  - There're lots of interesting blogs on Medium.com(application of ML architectures), Analytics Vidhya(Data Mining), Victor Cheng(Consulting) and our [blog](https://zhuanlan.zhihu.com/alpha-nebula) on Zhihu.com(on quantitative trading).
-
-
-### Online Course
- - [Deep Learning](https://www.coursera.org/specializations/deep-learning), by deeplearning.ai on Coursera, provide useful resources on Deep Learning, with instances on CV and NLP, very friendly for rookies.
