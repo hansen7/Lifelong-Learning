@@ -18,7 +18,7 @@
 - "Coomputer Age Statistical Inference", by Bradley Efron
 - "Introduction to Statistical Machine Learning", by Masashi Sugiyama
 - "The Element of Statistical Learning", by Trevor Hastie, Robert Tibshirani, Jerome Friedman
-- "Pattern Recognition and Machine Learning", by Christopher M. Bishop
+- "Pattern Recognition and Machine Learning", by Christopher M. Bishop, [Manual Solution](https://github.com/zhengqigao/PRML-Solution-Manual)
 - "Probabilistic Graphical Models", by Daphne Koller and Nir Friedman, and [CMU 10-708](https://sailinglab.github.io/pgm-spring-2019/), [Notes from Ermon Group](https://ermongroup.github.io/cs228-notes/)
 - "Convex Optimization", by Stephen Boyd and Lieven Vandenberghe
 
