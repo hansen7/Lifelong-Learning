@@ -3,6 +3,13 @@ __pycache__/
 *.py[cod]
 *$py.class
 .DS_Store
+notesML/*
+!notesML/*.pdf
+!notesML/*/*.pdf
+notesQuant/*
+!notesQuant/*.pdf
+!notesQuant/*/*.pdf
+
 
 # C extensions
 *.so
