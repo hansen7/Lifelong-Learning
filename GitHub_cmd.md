@@ -101,6 +101,10 @@ Rewrite your master branch so that any commits of yours that aren't already in u
 
 `git rebase upstream/master`
 
+or just:
+
+`git pull upstream/master`
+
 
 
 ##### How to check the differences between local and github before the pull, [ref](https://stackoverflow.com/questions/6000919/how-to-check-the-differences-between-local-and-github-before-the-pull):
