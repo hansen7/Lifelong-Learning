@@ -40,7 +40,7 @@ class Solution:
       
   
     # Runtime: 52 ms, faster than 95.65% of Python3 online submissions for Triangle.
-		# Memory Usage: 14.1 MB, less than 20.00% of Python3 online submissions for Triangle.
+	# Memory Usage: 14.1 MB, less than 20.00% of Python3 online submissions for Triangle.
     def minimumTotal(self, triangle: List[List[int]]) -> int:
         
         n_steps = len(triangle)       

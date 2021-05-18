@@ -30,7 +30,6 @@ class Solution:
         # Here we assume s is not None, this method exceeds the time limit
 
         max_length = 0
-
         longest_begin = longest_end = None
 
         for slow_pt in range(len(s)):

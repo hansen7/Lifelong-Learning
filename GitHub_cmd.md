@@ -123,4 +123,3 @@ in order to see the difference between your master, and the one on GitHub. If yo
 ##### Restore a deleted file
 
 `git checkout <commit-id> <your-lost-file-name>`
-
